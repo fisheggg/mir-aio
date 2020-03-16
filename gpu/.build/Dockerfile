@@ -210,6 +210,10 @@ RUN conda install --quiet --yes \
     'bokeh=1.4.*' \
     'cloudpickle=1.2.*' \
     'cython=0.29.*' \
+    'dask=2.9.*' \
+    'dill=0.3.*' \
+    'h5py=2.10.*' \
+    'hdf5=1.10.*' \
     'ipywidgets=7.5.*' \
     'matplotlib-base=3.1.*' \
     'numba=0.48.*' \
@@ -221,6 +225,11 @@ RUN conda install --quiet --yes \
     'scikit-learn=0.22.*' \
     'scipy=1.4.*' \
     'seaborn=0.9.*' \
+    'sqlalchemy=1.3.*' \
+    'statsmodels=0.11.*' \
+    'sympy=1.5.*' \
+    'vincent=0.4.*' \
+    'xlrd' \
     && \
     conda clean --all -f -y && \
     # Activate ipywidgets extension in the environment that runs the notebook server
@@ -289,27 +298,29 @@ RUN jupyter labextension install @jupyterlab/github
 RUN jupyter labextension install jupyterlab-drawio
 RUN jupyter labextension install @jupyterlab/plotly-extension
 RUN jupyter labextension install @jupyter-widgets/jupyterlab-manager
-RUN pip install --no-cache-dir jupyter-tabnine==1.0.2  && \
-  jupyter nbextension install --py jupyter_tabnine && \
-  jupyter nbextension enable --py jupyter_tabnine && \
-  jupyter serverextension enable --py jupyter_tabnine
-RUN fix-permissions $CONDA_DIR
 RUN conda install -c conda-forge jupyter_contrib_nbextensions && \
   conda install -c conda-forge jupyter_nbextensions_configurator && \
   jupyter nbextension enable codefolding/main
 RUN jupyter labextension install @ijmbarr/jupyterlab_spellchecker
+RUN pip install --no-cache-dir jupyterlab_latex==2.0.0 && \
+  jupyter serverextension enable --sys-prefix jupyterlab_latex &&  \
+  jupyter labextension install @jupyterlab/latex
+RUN jupyter labextension install @jupyterlab/toc
+RUN jupyter labextension install @aquirdturtle/collapsible_headings
+# RUN pip install --no-cache-dir jupyter-lsp==0.8.0 && \
+#   conda install -c conda-forge nodejs && \
+#   jupyter labextension install @krassowski/jupyterlab-lsp && \
+#   conda install -c conda-forge python-language-server
 
+
+RUN fix-permissions $CONDA_DIR
 RUN fix-permissions /home/$NB_USER
 
 # Switch back to jovyan to avoid accidental container runs as root
 USER $NB_UID
 
-# Copy jupyter_notebook_config.json
-COPY jupyter_notebook_config.json /etc/jupyter/
-
-
 ############################################################################
-############################  MIR packages   ###############################
+############################   MIR packages  ###############################
 ############################################################################
 
 LABEL maintainer="Arthur Jinyue Guo <jg5505@nyu.edu>"
@@ -349,4 +360,5 @@ RUN conda install --quiet --yes \
     'scipy' \
     && \
     conda clean --all -f -y
-
+# Copy jupyter_notebook_config.json
+COPY jupyter_notebook_config.json /etc/jupyter/

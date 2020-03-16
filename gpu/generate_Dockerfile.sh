@@ -86,7 +86,7 @@ echo "
 ############################   MIR packages  ###############################
 ############################################################################
 " >> $DOCKERFILE
-cat src/Dockerfile.usefulpackages >> $DOCKERFILE
+cat src/Dockerfile.mirpackages >> $DOCKERFILE
 
 
 # Copy the demo notebooks and change permissions
