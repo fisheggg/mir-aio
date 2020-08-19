@@ -298,15 +298,15 @@ RUN jupyter labextension install @jupyterlab/github
 RUN jupyter labextension install jupyterlab-drawio
 RUN jupyter labextension install @jupyterlab/plotly-extension
 RUN jupyter labextension install @jupyter-widgets/jupyterlab-manager
-RUN conda install -c conda-forge jupyter_contrib_nbextensions && \
-  conda install -c conda-forge jupyter_nbextensions_configurator && \
-  jupyter nbextension enable codefolding/main
-RUN jupyter labextension install @ijmbarr/jupyterlab_spellchecker
-RUN pip install --no-cache-dir jupyterlab_latex==2.0.0 && \
-  jupyter serverextension enable --sys-prefix jupyterlab_latex &&  \
-  jupyter labextension install @jupyterlab/latex
+# RUN conda install -c conda-forge jupyter_contrib_nbextensions && \
+#   conda install -c conda-forge jupyter_nbextensions_configurator && \
+#   jupyter nbextension enable codefolding/main
+# RUN jupyter labextension install @ijmbarr/jupyterlab_spellchecker
+# RUN pip install --no-cache-dir jupyterlab_latex==2.0.0 && \
+#   jupyter serverextension enable --sys-prefix jupyterlab_latex &&  \
+#   jupyter labextension install @jupyterlab/latex
 RUN jupyter labextension install @jupyterlab/toc
-RUN jupyter labextension install @aquirdturtle/collapsible_headings
+# RUN jupyter labextension install @aquirdturtle/collapsible_headings
 # RUN pip install --no-cache-dir jupyter-lsp==0.8.0 && \
 #   conda install -c conda-forge nodejs && \
 #   jupyter labextension install @krassowski/jupyterlab-lsp && \
@@ -327,28 +327,35 @@ LABEL maintainer="Arthur Jinyue Guo <jg5505@nyu.edu>"
 
 # Install Linux packages
 USER root
-RUN apt-get update && sudo apt-get  install -y sox
+RUN apt-get update && sudo apt-get  install -y sox libasound-dev libjack-dev
 USER $NB_USER
 
-# Install pip packages
-RUN pip install --upgrade pip &&\
-    pip install --quiet \
+# Install pip packages, using douban image
+RUN pip install --upgrade pip -i https://pypi.douban.com/simple/ &&\
+    pip install -i https://pypi.douban.com/simple/ \
     'mirdata==0.1.2' \
     'mir_eval==0.5' \
     'tensorflow==2.1.0' \
     'sox==1.3.7' \
     'Cython==0.29.15' \
-    'mido==1.2.9' \
+    'mido==1.2.6' \
     'madmom==0.16.1' \
     'librosa==0.7.2' \
-    'ddsp==0.0.9' \
+    # 'ddsp==0.0.9' \
+    'magenta==2.1.1' \
+    # magenta dependencies
+    'protobuf>=3.12.0' \
+    'google-auth>=1.16.0' \
+    'gast>=0.3.2' \
+    'absl-py<0.9,>=0.7' \
+    'tensorflow-probability==0.7.0' \
     && \
     fix-permissions $CONDA_DIR && \
     fix-permissions /home/$NB_USER
 
-
 # Install conda packages
-RUN conda install --quiet --yes \
+RUN conda update -n base conda &&
+    conda install --yes \
     'ipython' \
     'imageio' \
     'matplotlib' \
