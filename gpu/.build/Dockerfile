@@ -346,12 +346,51 @@ RUN pip install --upgrade pip -i https://pypi.douban.com/simple/ &&\
     # magenta dependencies
     'protobuf>=3.12.0' \
     'google-auth>=1.16.0' \
-    'gast>=0.3.2' \
+    'gast==0.2.2' \
     'absl-py<0.9,>=0.7' \
     'tensorflow-probability==0.7.0' \
+    'tensorflow-addons==0.9.1' \
+    'scipy==1.4.1' \
+    'music21' \
     && \
     fix-permissions $CONDA_DIR && \
     fix-permissions /home/$NB_USER
+
+# # Install magenta packages
+# RUN pip install --upgrade pip &&\
+#     pip install --quiet \
+#     'absl-py' \
+#     'dm-sonnet' \
+#     'dopamine-rl <= 3.0.1' \
+#     'imageio' \
+#     'librosa >= 0.6.2 \ < 0.8.0' \
+#     'matplotlib >= 1.5.3' \
+#     'mir_eval >= 0.4' \
+#     'note-seq' \
+#     'numba < 0.50' \
+#     'numpy' \
+#     'Pillow >= 3.4.2' \
+#     'pretty_midi >= 0.2.6' \
+#     'pygtrie >= 2.3' \
+#     'python-rtmidi >= 1.1 \ < 1.2' \
+#     'scikit-image' \
+#     'scipy >= 0.18.1' \
+#     'six >= 1.12.0' \
+#     'sk-video' \
+#     'sox >= 1.3.7' \
+#     'tensor2tensor' \
+#     'tensorflow' \
+#     'tensorflow-datasets' \
+#     'tf_slim' \
+#     'wheel' \
+#     'mido >= 1.2.8' \
+#     'protobuf >= 3.12.0' \
+#     'gast == 0.2.2' \
+#     'tensorflow-probability == 0.7.0' \
+#     'tensorflow-addons >= 0.8.3, <= 0.9.1' \
+#     && \
+#     fix-permissions $CONDA_DIR && \
+#     fix-permissions /home/$NB_USER
 
 # Install conda packages
 RUN conda update -n base conda &&
