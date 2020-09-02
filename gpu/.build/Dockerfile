@@ -352,6 +352,7 @@ RUN pip install --upgrade pip -i https://pypi.douban.com/simple/ &&\
     'tensorflow-addons==0.9.1' \
     'scipy==1.4.1' \
     'music21' \
+    'note_seq' \
     && \
     fix-permissions $CONDA_DIR && \
     fix-permissions /home/$NB_USER
