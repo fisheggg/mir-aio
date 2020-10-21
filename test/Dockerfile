@@ -4,6 +4,11 @@ LABEL maintainer="Arthur Jinyue Guo <jg5505@nyu.edu>"
 
 # Install Linux packages
 USER root
+# Delete nvidia apt source, which reports error occasionally.
+RUN rm /etc/apt/sources.list.d/nvidia-ml.list && rm /etc/apt/sources.list.d/cuda.list && apt-get clean
+## Use aliyun source if you are in China.
+RUN sed -i s@/archive.ubuntu.com/@/mirrors.aliyun.com/@g /etc/apt/sources.list
+
 RUN apt-get update && sudo apt-get  install -y \ 
                                             sox \
                                             libasound-dev \
@@ -12,37 +17,45 @@ RUN apt-get update && sudo apt-get  install -y \
 USER $NB_USER
 
 # Install pip packages, using douban image
-RUN pip install --upgrade pip -i https://pypi.douban.com/simple/ &&\
-    pip install -i https://pypi.douban.com/simple/ \
-    'mirdata==0.1.2' \
-    'mir_eval==0.5' \
-    'sox==1.3.7' \
+RUN pip install --upgrade pip \
+    ## Use aliyun source if you are in China.
+    -i https://mirrors.aliyun.com/pypi/simple/ &&\
+    pip install \
+    ## Use aliyun source if you are in China.
+    -i https://mirrors.aliyun.com/pypi/simple/ \
+    ## fix tensorflow version
+    'tensorflow==2.3.1' \
+    'mirdata' \
+    'mir_eval' \
+    'sox' \
     'mido==1.2.6' \
-    'madmom==0.16.1' \
+    'madmom' \
     'librosa==0.7.2' \
-    'music21==6.1.0' \
-    'ddsp==0.0.9' \
-    'muspy==0.1.0' \
+    'music21' \
+    # ddsp is having some issue when installing crepe
+    # 'ddsp==0.13.1' \
+    'muspy' \
     # magenta dependencies
-    'magenta==2.1.1' \
+    'magenta' \
     'protobuf>=3.12.0' \
-    'google-auth>=1.16.0' \
-    'gast==0.2.2' \
-    'absl-py<0.9,>=0.7' \
+    'google-auth' \
+    'gast' \
+    'absl-py' \
     'tensorflow-probability==0.7.0' \
-    'tensorflow-addons==0.9.1' \
-    'scipy==1.4.1' \
-    'note_seq==0.0.1' \
+    'tensorflow-addons' \
+    'scipy' \
+    'note_seq' \
     && \
-    fix-permissions $CONDA_DIR && \
-    fix-permissions /home/$NB_USER
+    pip cache purge
+    # fix-permissions $CONDA_DIR && \
+    # fix-permissions /home/$NB_USER
 
 # Install conda packages
 RUN conda update -n base conda && \
     conda install --yes \
     'ipython' \
     'imageio' \
-    'pandoc' \
-    'requests' \
+    # 'pandoc' \
+    # 'requests' \
     && \
     conda clean --all -f -y
