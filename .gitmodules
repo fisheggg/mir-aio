@@ -1,0 +1,3 @@
+[submodule "tf/.build/docker-stacks"]
+	path = tf/.build/docker-stacks
+	url = https://github.com/jupyter/docker-stacks
