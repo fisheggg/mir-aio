@@ -5,9 +5,9 @@ LABEL maintainer="Arthur Jinyue Guo <jg5505@nyu.edu>"
 # Install Linux packages
 USER root
 # Delete nvidia apt source, which reports error occasionally.
-RUN rm /etc/apt/sources.list.d/nvidia-ml.list && rm /etc/apt/sources.list.d/cuda.list && apt-get clean
+# RUN rm /etc/apt/sources.list.d/nvidia-ml.list && rm /etc/apt/sources.list.d/cuda.list && apt-get clean
 ## Use aliyun source if you are in China.
-RUN sed -i s@/archive.ubuntu.com/@/mirrors.aliyun.com/@g /etc/apt/sources.list
+# RUN sed -i s@/archive.ubuntu.com/@/mirrors.aliyun.com/@g /etc/apt/sources.list
 
 RUN apt-get update && sudo apt-get  install -y \ 
                                             sox \
@@ -19,10 +19,10 @@ USER $NB_USER
 # Install pip packages, using douban image
 RUN pip install --upgrade pip \
     ## Use aliyun source if you are in China.
-    -i https://mirrors.aliyun.com/pypi/simple/ &&\
+    # -i https://mirrors.aliyun.com/pypi/simple/ &&\
     pip install \
     ## Use aliyun source if you are in China.
-    -i https://mirrors.aliyun.com/pypi/simple/ \
+    # -i https://mirrors.aliyun.com/pypi/simple/ \
     ## fix tensorflow version
     'tensorflow==2.3.1' \
     'mirdata' \
