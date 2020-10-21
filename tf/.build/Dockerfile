@@ -26,8 +26,8 @@ USER root
 # features (e.g., download as all possible file formats)
 ENV DEBIAN_FRONTEND noninteractive
 # Use aliyun source if you are in China.
-RUN sed -i s@/archive.ubuntu.com/@/mirrors.aliyun.com/@g /etc/apt/sources.list
-RUN rm /etc/apt/sources.list.d/nvidia-ml.list && rm /etc/apt/sources.list.d/cuda.list && apt-get clean
+# RUN sed -i s@/archive.ubuntu.com/@/mirrors.aliyun.com/@g /etc/apt/sources.list
+# RUN rm /etc/apt/sources.list.d/nvidia-ml.list && rm /etc/apt/sources.list.d/cuda.list && apt-get clean
 RUN apt-get update \
  && apt-get install -yq --no-install-recommends \
     wget \
