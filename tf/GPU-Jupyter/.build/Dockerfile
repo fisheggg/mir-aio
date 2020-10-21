@@ -1,6 +1,6 @@
 # Use NVIDIA CUDA as base image and run the same installation as in the other packages.
 # The version of cudatoolkit must match those of the base image, see Dockerfile.pytorch
-FROM nvidia/cuda:10.1-base-ubuntu18.04
+FROM nvidia/cuda:11.1-base-ubuntu18.04
 LABEL maintainer="Christoph Schranz <christoph.schranz@salzburgresearch.at>"
 # The maintainers of subsequent sections may vary
 
@@ -25,6 +25,9 @@ USER root
 # Install all OS dependencies for notebook server that starts but lacks all
 # features (e.g., download as all possible file formats)
 ENV DEBIAN_FRONTEND noninteractive
+# Use aliyun source if you are in China.
+# RUN sed -i s@/archive.ubuntu.com/@/mirrors.aliyun.com/@g /etc/apt/sources.list
+# RUN rm /etc/apt/sources.list.d/nvidia-ml.list && rm /etc/apt/sources.list.d/cuda.list && apt-get clean
 RUN apt-get update \
  && apt-get install -yq --no-install-recommends \
     wget \
@@ -170,6 +173,7 @@ RUN apt-get update && apt-get install -yq --no-install-recommends \
     lmodern \
     netcat \
     python-dev \
+    && apt-get install -yq --no-install-recommends \
     # ---- nbconvert dependencies ----
     texlive-xetex \
     texlive-fonts-recommended \
@@ -248,14 +252,14 @@ RUN conda install --quiet --yes \
     fix-permissions /home/$NB_USER
 
 # Install facets which does not have a pip or conda package at the moment
-RUN cd /tmp && \
-    git clone https://github.com/PAIR-code/facets.git && \
-    cd facets && \
-    jupyter nbextension install facets-dist/ --sys-prefix && \
-    cd && \
-    rm -rf /tmp/facets && \
-    fix-permissions $CONDA_DIR && \
-    fix-permissions /home/$NB_USER
+# RUN cd /tmp && \
+#     git clone https://github.com/PAIR-code/facets.git && \
+#     cd facets && \
+#     jupyter nbextension install facets-dist/ --sys-prefix && \
+#     cd && \
+#     rm -rf /tmp/facets && \
+#     fix-permissions $CONDA_DIR && \
+#     fix-permissions /home/$NB_USER
 
 # Import matplotlib the first time to build the font cache.
 ENV XDG_CACHE_HOME /home/$NB_USER/.cache/
@@ -297,7 +301,7 @@ USER root
 RUN jupyter labextension install @jupyterlab/github
 RUN jupyter labextension install jupyterlab-drawio
 RUN jupyter labextension install @jupyterlab/plotly-extension
-RUN jupyter labextension install @jupyter-widgets/jupyterlab-manager
+# RUN jupyter labextension install @jupyter-widgets/jupyterlab-manager
 # RUN conda install -c conda-forge jupyter_contrib_nbextensions && \
 #   conda install -c conda-forge jupyter_nbextensions_configurator && \
 #   jupyter nbextension enable codefolding/main
@@ -327,7 +331,11 @@ LABEL maintainer="Arthur Jinyue Guo <jg5505@nyu.edu>"
 
 # Install Linux packages
 USER root
-RUN apt-get update && sudo apt-get  install -y sox libasound-dev libjack-dev
+RUN apt-get update && sudo apt-get  install -y \ 
+                                            sox \
+                                            libasound-dev \
+                                            libjack-dev \
+                                            fluidsynth
 USER $NB_USER
 
 # Install pip packages, using douban image
@@ -341,7 +349,8 @@ RUN pip install --upgrade pip -i https://pypi.douban.com/simple/ &&\
     'mido==1.2.6' \
     'madmom==0.16.1' \
     'librosa==0.7.2' \
-    # 'ddsp==0.0.9' \
+    'music21==6.1.0' \
+    'ddsp==0.0.9' \
     'magenta==2.1.1' \
     # magenta dependencies
     'protobuf>=3.12.0' \
@@ -351,50 +360,13 @@ RUN pip install --upgrade pip -i https://pypi.douban.com/simple/ &&\
     'tensorflow-probability==0.7.0' \
     'tensorflow-addons==0.9.1' \
     'scipy==1.4.1' \
-    'music21' \
-    'note_seq' \
+    'note_seq==0.0.1' \
     && \
     fix-permissions $CONDA_DIR && \
     fix-permissions /home/$NB_USER
 
-# # Install magenta packages
-# RUN pip install --upgrade pip &&\
-#     pip install --quiet \
-#     'absl-py' \
-#     'dm-sonnet' \
-#     'dopamine-rl <= 3.0.1' \
-#     'imageio' \
-#     'librosa >= 0.6.2 \ < 0.8.0' \
-#     'matplotlib >= 1.5.3' \
-#     'mir_eval >= 0.4' \
-#     'note-seq' \
-#     'numba < 0.50' \
-#     'numpy' \
-#     'Pillow >= 3.4.2' \
-#     'pretty_midi >= 0.2.6' \
-#     'pygtrie >= 2.3' \
-#     'python-rtmidi >= 1.1 \ < 1.2' \
-#     'scikit-image' \
-#     'scipy >= 0.18.1' \
-#     'six >= 1.12.0' \
-#     'sk-video' \
-#     'sox >= 1.3.7' \
-#     'tensor2tensor' \
-#     'tensorflow' \
-#     'tensorflow-datasets' \
-#     'tf_slim' \
-#     'wheel' \
-#     'mido >= 1.2.8' \
-#     'protobuf >= 3.12.0' \
-#     'gast == 0.2.2' \
-#     'tensorflow-probability == 0.7.0' \
-#     'tensorflow-addons >= 0.8.3, <= 0.9.1' \
-#     && \
-#     fix-permissions $CONDA_DIR && \
-#     fix-permissions /home/$NB_USER
-
 # Install conda packages
-RUN conda update -n base conda &&
+RUN conda update -n base conda && \
     conda install --yes \
     'ipython' \
     'imageio' \
