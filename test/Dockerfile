@@ -1,4 +1,4 @@
-FROM cschranz/gpu-jupyter:latest
+FROM cschranz/gpu-jupyter:v1.1_cuda-10.1_ubuntu-18.04_python-only
 
 LABEL maintainer="Arthur Jinyue Guo <jg5505@nyu.edu>"
 
@@ -26,7 +26,7 @@ RUN pip install --upgrade pip \
     # -i https://mirrors.aliyun.com/pypi/simple/ \
     ## fix tensorflow version
     'tensorflow==2.3.1' \
-    'pytorch==1.4.0' \
+    # 'pytorch==1.6.0' \
     'mirdata' \
     'mir_eval' \
     'sox' \

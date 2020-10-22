@@ -1,6 +1,6 @@
 # mir-aio
 A python MIR (Music Information Retrieval) All-In-One toolbox.
-Based on https://hub.docker.com/r/cschranz/gpu-jupyter/dockerfile.
+Based on https://github.com/iot-salzburg/gpu-jupyter
 
 System requirement: Ubuntu 18.04
 
@@ -53,7 +53,7 @@ sudo docker exec -it mir-aio:latest tensorboard --logdir tf_logs/
 #### ML related
  - scipy
  - scikit-learn
- - tensorflow
+ - tensorflow==2.3.1
  - pytorch
 
 #### Utilities
