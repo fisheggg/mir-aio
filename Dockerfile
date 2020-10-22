@@ -52,8 +52,6 @@ RUN pip install --upgrade pip \
     'tensorflow-probability==0.7.0' \
     'tensorflow-addons' \
     'note_seq' \
-    && \
-    pip cache purge
     # fix-permissions $CONDA_DIR && \
     # fix-permissions /home/$NB_USER
 
