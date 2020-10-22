@@ -16,12 +16,18 @@ RUN apt-get update && sudo apt-get  install -y \
                                             fluidsynth
 USER $NB_USER
 
+## Uninstall pip packages
+RUN pip install --upgrade pip \
+    && \
+    pip uninstall \
+    'tensorflow-gpu'
+
 ## Install pip packages
 RUN pip install --upgrade pip \
     ## Use aliyun source if you are in China.
     # -i https://mirrors.aliyun.com/pypi/simple/ \
     && \
-    pip install \
+    pip install --no-cache-dir\
     ## Use aliyun source if you are in China.
     # -i https://mirrors.aliyun.com/pypi/simple/ \
     ## fix tensorflow version
@@ -40,7 +46,7 @@ RUN pip install --upgrade pip \
     ## magenta dependencies
     'magenta' \
     'protobuf>=3.12.0' \
-    'google-auth' \
+    'google-auth>=1.21.1' \
     'gast' \
     'absl-py' \
     'tensorflow-probability==0.7.0' \
