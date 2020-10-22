@@ -33,10 +33,10 @@ RUN pip install --upgrade pip \
     'madmom' \
     'librosa==0.7.2' \
     'music21' \
-    # ddsp is having some issue when installing crepe
+    ## ddsp is having some issue when installing crepe
     # 'ddsp==0.13.1' \
     'muspy' \
-    # magenta dependencies
+    ## magenta dependencies
     'magenta' \
     'protobuf>=3.12.0' \
     'google-auth' \
@@ -44,7 +44,6 @@ RUN pip install --upgrade pip \
     'absl-py' \
     'tensorflow-probability==0.7.0' \
     'tensorflow-addons' \
-    'scipy' \
     'note_seq' \
     && \
     pip cache purge
@@ -52,11 +51,11 @@ RUN pip install --upgrade pip \
     # fix-permissions /home/$NB_USER
 
 # Install conda packages
-RUN conda update -n base conda && \
-    conda install --yes \
-    'ipython' \
-    'imageio' \
-    # 'pandoc' \
-    # 'requests' \
-    && \
-    conda clean --all -f -y
+# RUN conda update -n base conda && \
+#     conda install --yes \
+#     'ipython' \
+#     'imageio' \
+#     'pandoc' \
+#     'requests' \
+#     && \
+#     conda clean --all -f -y
