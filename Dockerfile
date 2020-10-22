@@ -18,16 +18,14 @@ USER $NB_USER
 
 ## Uninstall pip packages
 RUN pip install --upgrade pip \
+    ## Use aliyun source if you are in China.
+    # -i https://mirrors.aliyun.com/pypi/simple/ \
     && \
     pip uninstall -y \
     'tensorflow-gpu'
 
 ## Install pip packages
-RUN pip install --upgrade pip \
-    ## Use aliyun source if you are in China.
-    # -i https://mirrors.aliyun.com/pypi/simple/ \
-    && \
-    pip install --no-cache-dir\
+RUN pip install --no-cache-dir\
     ## Use aliyun source if you are in China.
     # -i https://mirrors.aliyun.com/pypi/simple/ \
     ## fix tensorflow version
@@ -51,7 +49,7 @@ RUN pip install --upgrade pip \
     'absl-py' \
     'tensorflow-probability==0.7.0' \
     'tensorflow-addons' \
-    'note_seq' \
+    'note_seq'
     # fix-permissions $CONDA_DIR && \
     # fix-permissions /home/$NB_USER
 
@@ -66,4 +64,4 @@ RUN pip install --upgrade pip \
 #     conda clean --all -f -y
 
 ## copy the guide notebook
-COPY ./src/start_guide.ipynb /home/$NB_USER
+COPY src/start_guide.ipynb /home/$NB_USER
