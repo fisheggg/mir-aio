@@ -16,7 +16,7 @@ RUN apt-get update && sudo apt-get  install -y \
                                             fluidsynth
 USER $NB_USER
 
-# Install pip packages, using douban image
+## Install pip packages
 RUN pip install --upgrade pip \
     ## Use aliyun source if you are in China.
     # -i https://mirrors.aliyun.com/pypi/simple/ \
@@ -26,6 +26,7 @@ RUN pip install --upgrade pip \
     # -i https://mirrors.aliyun.com/pypi/simple/ \
     ## fix tensorflow version
     'tensorflow==2.3.1' \
+    'pytorch==1.4.0' \
     'mirdata' \
     'mir_eval' \
     'sox' \
@@ -50,7 +51,7 @@ RUN pip install --upgrade pip \
     # fix-permissions $CONDA_DIR && \
     # fix-permissions /home/$NB_USER
 
-# Install conda packages
+## Install conda packages
 # RUN conda update -n base conda && \
 #     conda install --yes \
 #     'ipython' \
@@ -59,3 +60,6 @@ RUN pip install --upgrade pip \
 #     'requests' \
 #     && \
 #     conda clean --all -f -y
+
+## copy the guide notebook
+COPY start_guide.ipynb /home/$NB_USER
