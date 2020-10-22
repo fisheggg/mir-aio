@@ -19,7 +19,7 @@ USER $NB_USER
 ## Uninstall pip packages
 RUN pip install --upgrade pip \
     && \
-    pip uninstall \
+    pip uninstall -y \
     'tensorflow-gpu'
 
 ## Install pip packages

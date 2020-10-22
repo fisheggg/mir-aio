@@ -12,7 +12,7 @@ System requirement: Ubuntu 18.04
 
 #### Step 0: Check your device
  - Make sure your computer is running ubuntu 18.04. (guide: https://www.linuxtechi.com/ubuntu-18-04-lts-desktop-installation-guide-screenshots/)
- - If you want to use GPU, make sure you have one. (must be NVIDIA)
+ - If you want to use GPU, make sure you update the NVIDIA driver version to at least 440.33. (must be NVIDIA) (guide: https://www.cyberciti.biz/faq/ubuntu-linux-install-nvidia-driver-latest-proprietary-driver/)
 
 #### Step 1: Install Docker
  - Run the following commands in your terminal:
@@ -61,16 +61,16 @@ sudo docker exec -it mir-aio:latest tensorboard --logdir tf_logs/
  - fluidsynth
 
 #### MIR related
- - librosa
- - mir_eval
- - mirdata
- - sox
+ - librosa: https://github.com/librosa/librosa
+ - mir_eval: https://craffel.github.io/mir_eval/
+ - mirdata: https://github.com/mir-dataset-loaders/mirdata
+ - pysox: https://github.com/rabitt/pysox
  - jams
  - madmom
- - prettyMIDI
- - music21
- - magenta
- - muspy (new!)
+ - prettyMIDI: https://github.com/craffel/pretty-midi
+ - music21: http://web.mit.edu/music21/
+ - magenta: https://github.com/magenta/magenta
+ - muspy (new!) https://github.com/salu133445/muspy
  <!-- - ddsp -->
 
 #### ML related
