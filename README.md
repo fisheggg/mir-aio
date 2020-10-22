@@ -32,29 +32,14 @@ sudo docker run -it --gpus all \
 ```
  - Change `$WORK_DIR` to the directory of your own files, e.g. `/home/arthur/my_workspace/`.
  - Docker will read, write all files in this folder. Docker do not have access to any other directory on your computer.
+ - WARNING: If you are editing any file not in /home/jovyan/workpace, they will NOT be saved after you stop the current container.
 
 #### Step 3: Open Jupyter lab
  - Open your browser and go to `localhost:8888`.
  - Default password is `asdf`.
  - Checkout `start_guide.ipynb` to see what can you do with mir-aio.
 
-### Usage
-#### Start Jupyter Lab:
-
-Default password of Jupyter:asdf
-
-Run the following command in shell:
-```
-sudo docker run -it --gpus all \
-                           --name mir-aio \
-                           -e JUPYTER_ENABLE_LAB=yes \
-                           --mount type=bind,source=$WORK_DIR,target=/home/jovyan/workspace \
-                           -p 8888:8888 -p 6006:6006 arthurgjy/mir-aio:latest
-```
-Change `$WORK_DIR` to the directory of your own files.
-
-
-#### Start tensorboard:
+#### (Optional) Start tensorboard:
 ```
 sudo docker exec -it mir-aio:latest tensorboard --logdir tf_logs/
 ```
