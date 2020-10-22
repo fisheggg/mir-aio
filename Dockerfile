@@ -62,4 +62,4 @@ RUN pip install --upgrade pip \
 #     conda clean --all -f -y
 
 ## copy the guide notebook
-COPY start_guide.ipynb /home/$NB_USER
+COPY ./src/start_guide.ipynb /home/$NB_USER
