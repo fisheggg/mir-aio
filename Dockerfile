@@ -1,4 +1,4 @@
-FROM cschranz/gpu-jupyter:v1.1_cuda-10.1_ubuntu-18.04_python-only
+FROM cschranz/gpu-jupyter:latest
 
 LABEL maintainer="Arthur Jinyue Guo <jg5505@nyu.edu>"
 
