@@ -35,7 +35,7 @@ RUN pip install --no-cache-dir\
     'mir_eval' \
     'sox' \
     'mido==1.2.6' \
-    'madmom' \
+#     'madmom' \
     'librosa==0.7.2' \
     'music21' \
     ## ddsp is having some issue when installing crepe
