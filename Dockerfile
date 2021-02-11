@@ -17,20 +17,20 @@ RUN apt-get update && sudo apt-get  install -y \
 USER $NB_USER
 
 ## Uninstall pip packages
-RUN pip install --upgrade pip \
+# RUN pip install --upgrade pip \
     ## Use aliyun source if you are in China.
     # -i https://mirrors.aliyun.com/pypi/simple/ \
-    && \
-    pip uninstall -y \
-    'tensorflow-gpu'
+    # && \
+    # pip uninstall -y \
+    # 'tensorflow-gpu'
 
 ## Install pip packages
 RUN pip install --no-cache-dir\
     ## Use aliyun source if you are in China.
     # -i https://mirrors.aliyun.com/pypi/simple/ \
     ## fix tensorflow version
-    'tensorflow==2.3.1' \
-    'pytorch==1.7.1' \
+    # 'tensorflow==2.3.1' \
+    # 'pytorch==1.7.1' \
     'mirdata' \
     'mir_eval' \
     'sox' \
