@@ -30,7 +30,7 @@ RUN pip install --no-cache-dir\
     # -i https://mirrors.aliyun.com/pypi/simple/ \
     ## fix tensorflow version
     'tensorflow==2.3.1' \
-    # 'pytorch==1.6.0' \
+    'pytorch==1.7.1' \
     'mirdata' \
     'mir_eval' \
     'sox' \
