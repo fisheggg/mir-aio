@@ -57,7 +57,7 @@ RUN pip install --no-cache-dir\
 RUN conda update -n base conda && \
     conda install --yes \
     'pylint' \
-    'pytoch=1.7.1' \
+    'pytorch=1.7.1' \
 #     'ipython' \
 #     'imageio' \
 #     'pandoc' \
