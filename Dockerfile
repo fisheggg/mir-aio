@@ -88,7 +88,6 @@ RUN conda remove -qy \
 RUN conda update --quiet --yes \
     torchvision \
     pytorch \
-    torchaudio \
     -c pytorch \
     && \
     conda clean --all -f -y
