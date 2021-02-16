@@ -54,14 +54,16 @@ RUN pip install --no-cache-dir\
     # fix-permissions /home/$NB_USER
 
 ## Install conda packages
-# RUN conda update -n base conda && \
-#     conda install --yes \
+RUN conda update -n base conda && \
+    conda install --yes \
+    'pylint' \
+    'pytoch=1.7.1' \
 #     'ipython' \
 #     'imageio' \
 #     'pandoc' \
 #     'requests' \
-#     && \
-#     conda clean --all -f -y
+    && \
+    conda clean --all -f -y
 
 ## copy the guide notebook
 COPY src/start_guide.ipynb /home/$NB_USER
