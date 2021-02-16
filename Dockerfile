@@ -54,14 +54,42 @@ RUN pip install --no-cache-dir\
     # fix-permissions /home/$NB_USER
 
 ## Install conda packages
-RUN conda update -n base conda && \
-    conda install --yes \
-    'pylint' \
-    'pytorch=1.7.1' \
+# RUN conda update -n base conda && \
+    # conda install --quiet --yes \
+    # 'pylint' \
+#    'pytorch=1.7.1' \
 #     'ipython' \
 #     'imageio' \
 #     'pandoc' \
 #     'requests' \
+    # && \
+    # conda clean --all -f -y
+
+# Remove r packages
+RUN conda remove -qy \
+    'r-base'  \
+    'r-caret' \
+    'r-crayon' \
+    'r-devtools' \
+    'r-forecast' \ 
+    'r-hexbin' \
+    'r-htmltools' \
+    'r-htmlwidgets' \ 
+    'r-irkernel' \
+    'r-nycflights13' \
+    'r-randomforest' \
+    'r-rcurl' \
+    'r-rmarkdown' \
+    'r-rsqlite' \
+    'r-shiny' \
+    'r-tidyverse' \
+    'rpy2'
+
+RUN conda update --quiet --yes \
+    torchvision \
+    pytorch \
+    torchaudio \
+    -c pytorch \
     && \
     conda clean --all -f -y
 
