@@ -24,6 +24,21 @@ USER $NB_USER
     # pip uninstall -y \
     # 'tensorflow-gpu'
 
+## Install conda packages
+RUN conda install -qy && \
+    numba=0.48 \
+    pytorch=1.7.1 \
+    # conda install --quiet --yes \
+    # 'pylint' \
+#    'pytorch=1.7.1' \
+#     'ipython' \
+#     'imageio' \
+#     'pandoc' \
+#     'requests' \
+    -c pytorch -c conda-forge \
+    && \
+    conda clean --all -f -y
+
 ## Install pip packages
 RUN pip install --no-cache-dir\
     ## Use aliyun source if you are in China.
@@ -52,21 +67,6 @@ RUN pip install --no-cache-dir\
     # 'note_seq'
     # fix-permissions $CONDA_DIR && \
     # fix-permissions /home/$NB_USER
-
-## Install conda packages
-RUN conda install -qy && \
-    numba=0.48 \
-    pytorch=1.7.1 \
-    # conda install --quiet --yes \
-    # 'pylint' \
-#    'pytorch=1.7.1' \
-#     'ipython' \
-#     'imageio' \
-#     'pandoc' \
-#     'requests' \
-    -c pytorch -c conda-forge \
-    && \
-    conda clean --all -f -y
 
 # Remove r packages
 RUN conda remove -qy \
