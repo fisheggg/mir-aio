@@ -36,25 +36,27 @@ RUN pip install --no-cache-dir\
     'sox' \
     'mido==1.2.6' \
 #     'madmom' \
-    'librosa==0.7.2' \
+    'librosa' \
     'music21' \
     ## ddsp is having some issue when installing crepe
-    # 'ddsp==0.13.1' \
+    'ddsp==0.13.1' \
     'muspy' \
     ## magenta dependencies
-    'magenta' \
-    'protobuf>=3.12.0' \
-    'google-auth>=1.21.1' \
-    'gast' \
-    'absl-py' \
-    'tensorflow-probability==0.7.0' \
-    'tensorflow-addons' \
-    'note_seq'
+    # 'magenta' \
+    # 'protobuf>=3.12.0' \
+    # 'google-auth>=1.21.1' \
+    # 'gast' \
+    # 'absl-py' \
+    # 'tensorflow-probability==0.7.0' \
+    # 'tensorflow-addons' \
+    # 'note_seq'
     # fix-permissions $CONDA_DIR && \
     # fix-permissions /home/$NB_USER
 
 ## Install conda packages
-# RUN conda update -n base conda && \
+RUN conda install -qy && \
+    numba=0.48 \
+    pytorch=1.7.1 \
     # conda install --quiet --yes \
     # 'pylint' \
 #    'pytorch=1.7.1' \
@@ -62,8 +64,9 @@ RUN pip install --no-cache-dir\
 #     'imageio' \
 #     'pandoc' \
 #     'requests' \
-    # && \
-    # conda clean --all -f -y
+    -c pytorch -c conda-forge \
+    && \
+    conda clean --all -f -y
 
 # Remove r packages
 RUN conda remove -qy \
@@ -85,7 +88,7 @@ RUN conda remove -qy \
     'r-tidyverse' \
     'rpy2'
 
-RUN conda update --quiet --yes \
+RUN conda update -qy \
     torchvision \
     pytorch \
     -c pytorch \
