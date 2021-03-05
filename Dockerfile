@@ -88,12 +88,12 @@ RUN conda remove -qy \
     'r-tidyverse' \
     'rpy2'
 
-RUN conda update -qy \
-    torchvision \
-    pytorch \
-    -c pytorch \
-    && \
-    conda clean --all -f -y
+# RUN conda update -qy \
+#     torchvision \
+#     pytorch \
+#     -c pytorch \
+#     && \
+#     conda clean --all -f -y
 
 ## copy the guide notebook
 COPY src/start_guide.ipynb /home/$NB_USER
