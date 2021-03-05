@@ -40,7 +40,7 @@ RUN pip install --no-cache-dir\
     'music21' \
     ## ddsp is having some issue when installing crepe
     'ddsp==0.13.1' \
-    'muspy' \
+    'muspy'
     ## magenta dependencies
     # 'magenta' \
     # 'protobuf>=3.12.0' \
