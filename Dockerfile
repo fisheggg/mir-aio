@@ -25,7 +25,7 @@ USER $NB_USER
     # 'tensorflow-gpu'
 
 ## Install conda packages
-RUN conda install -qy && \
+RUN conda install -qy \
     numba=0.48 \
     pytorch=1.7.1 \
     # conda install --quiet --yes \
