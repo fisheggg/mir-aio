@@ -1,4 +1,4 @@
-FROM cschranz/gpu-jupyter:latest
+FROM cschranz/gpu-jupyter:v1.4_cuda-11.0_ubuntu-20.04_python-only
 
 LABEL maintainer="Arthur Jinyue Guo <jg5505@nyu.edu>"
 
@@ -7,7 +7,7 @@ USER root
 ## Delete nvidia apt source, which reports error occasionally.
 RUN rm /etc/apt/sources.list.d/nvidia-ml.list && rm /etc/apt/sources.list.d/cuda.list && apt-get clean
 ## Use aliyun source if you are in China.
-# RUN sed -i s@/archive.ubuntu.com/@/mirrors.aliyun.com/@g /etc/apt/sources.list
+RUN sed -i s@/archive.ubuntu.com/@/mirrors.aliyun.com/@g /etc/apt/sources.list
 
 RUN apt-get update && sudo apt-get  install -y \ 
                                             sox \
@@ -25,36 +25,35 @@ USER $NB_USER
     # 'tensorflow-gpu'
 
 ## Install conda packages
-RUN conda install -qy \
-    numba=0.48 \
-    pytorch=1.7.1 \
-    # conda install --quiet --yes \
-    # 'pylint' \
-#    'pytorch=1.7.1' \
+RUN conda update -n base conda
+
+# RUN conda install -y \
+#     numba \
+#     pytorch=1.8.1 \
+#     torchvision \
+#     torchaudio \
 #     'ipython' \
 #     'imageio' \
-#     'pandoc' \
+#     pandoc \
 #     'requests' \
-    -c pytorch -c conda-forge \
-    && \
-    conda clean --all -f -y
+#     -c pytorch -c conda-forge \
+#     && \
+#     conda clean --all -f -y
 
 ## Install pip packages
 RUN pip install --no-cache-dir\
     ## Use aliyun source if you are in China.
     # -i https://mirrors.aliyun.com/pypi/simple/ \
-    ## fix tensorflow version
-    # 'tensorflow==2.3.1' \
-    # 'pytorch==1.7.1' \
+    'pytorch-lightning' \
     'mirdata' \
     'mir_eval' \
     'sox' \
     'mido==1.2.6' \
-#     'madmom' \
+    # 'madmom' \
     'librosa' \
     'music21' \
     ## ddsp is having some issue when installing crepe
-    'ddsp==0.13.1' \
+    # 'ddsp' \
     'muspy'
     ## magenta dependencies
     # 'magenta' \
@@ -65,28 +64,26 @@ RUN pip install --no-cache-dir\
     # 'tensorflow-probability==0.7.0' \
     # 'tensorflow-addons' \
     # 'note_seq'
-    # fix-permissions $CONDA_DIR && \
-    # fix-permissions /home/$NB_USER
 
-# Remove r packages
-RUN conda remove -qy \
-    'r-base'  \
-    'r-caret' \
-    'r-crayon' \
-    'r-devtools' \
-    'r-forecast' \ 
-    'r-hexbin' \
-    'r-htmltools' \
-    'r-htmlwidgets' \ 
-    'r-irkernel' \
-    'r-nycflights13' \
-    'r-randomforest' \
-    'r-rcurl' \
-    'r-rmarkdown' \
-    'r-rsqlite' \
-    'r-shiny' \
-    'r-tidyverse' \
-    'rpy2'
+# # Remove r packages
+# RUN conda remove -qy \
+#     'r-base'  \
+#     'r-caret' \
+#     'r-crayon' \
+#     'r-devtools' \
+#     'r-forecast' \ 
+#     'r-hexbin' \
+#     'r-htmltools' \
+#     'r-htmlwidgets' \ 
+#     'r-irkernel' \
+#     'r-nycflights13' \
+#     'r-randomforest' \
+#     'r-rcurl' \
+#     'r-rmarkdown' \
+#     'r-rsqlite' \
+#     'r-shiny' \
+#     'r-tidyverse' \
+#     'rpy2'
 
 # RUN conda update -qy \
 #     torchvision \

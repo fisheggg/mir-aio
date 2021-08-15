@@ -6,12 +6,12 @@ Docker Hub page: https://hub.docker.com/repository/docker/arthurgjy/mir-aio
 Based on https://github.com/iot-salzburg/gpu-jupyter
 
 
-System requirement: Ubuntu 18.04
+System requirement: Ubuntu 20.04
 
 ## Installation Guide
 
 #### Step 0: Check your device
- - Make sure your computer is running ubuntu 18.04. (guide: https://www.linuxtechi.com/ubuntu-18-04-lts-desktop-installation-guide-screenshots/)
+ - Make sure your computer is running ubuntu 20.04. (guide: https://www.linuxtechi.com/ubuntu-20-04-lts-desktop-installation-guide-screenshots/)
  - If you want to use GPU, make sure you update the NVIDIA driver version to at least 440.33. (must be NVIDIA) (guide: https://www.cyberciti.biz/faq/ubuntu-linux-install-nvidia-driver-latest-proprietary-driver/)
 
 #### Step 1: Install Docker
@@ -40,7 +40,7 @@ sudo docker run -it --gpus all \
 
 #### Step 3: Open Jupyter lab
  - Open your browser and go to `localhost:8888`.
- - Default password is `asdf`.
+ - Default password is `gpu-jupyter`.
  - Checkout `start_guide.ipynb` to see what can you do with mir-aio.
 
 #### (Optional) Start tensorboard:
@@ -51,7 +51,7 @@ sudo docker exec -it mir-aio:latest tensorboard --logdir tf_logs/
 ### Package list
 
 #### GPU dependencies
- - CUDA 10.1
+ - CUDA 11.1
  - cuDNN 7
 
 #### Ubuntu packages
@@ -76,8 +76,8 @@ sudo docker exec -it mir-aio:latest tensorboard --logdir tf_logs/
 #### ML related
  - scipy
  - scikit-learn
- - tensorflow==2.3.1
- - pytorch
+ - tensorflow==2.4.1
+ - pytorch==1.8.1
 
 #### Utilities
  - Jupyter notebook & lab
